@@ -1,9 +1,15 @@
 /*
  *  ofxRecorder.cpp
- *  Colaborama
+ *  Vamoss
  *
- *  Created by Patricio González Vivo on 22/10/10.
- *  Copyright 2010 PatricioGonzalezVivo.com. All rights reserved.
+ *  Created by Vamoss on 23/10/13.
+ *  Copyright 2013 vamoss.com.br. No rights reserved.
+ *
+ *  Objective:
+ *  Create a simple way to save events and reproduce then in the equivalent time that it happened
+ *
+ * Adapted from Patricio González
+ * https://github.com/patriciogonzalezvivo/ofxSubtitles/
  *
  */
 #include "ofxRecorder.h"
@@ -74,6 +80,8 @@ void ofxRecorder::save(string path){
 }
 
 void ofxRecorder::add(string text, double time){
+	if(time == NULL) time = ofGetElapsedTimeMillis();
+
 	recordItem tempSub;
 	tempSub.time	= time;
 	tempSub.text	= text;
@@ -94,9 +102,7 @@ void ofxRecorder::add(string text, double time){
 }
 
 vector<recordItem> ofxRecorder::getItems(double _in, double _out){
-	if(_in == NULL){
-		_in = ofGetElapsedTimeMillis();
-	}
+	if(_in == NULL) _in = ofGetElapsedTimeMillis();
 	if(_out == NULL){
 		_out = _in;
 		_in = lastOutTime;
